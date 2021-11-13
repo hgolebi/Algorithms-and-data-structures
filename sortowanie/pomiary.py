@@ -6,20 +6,17 @@ from selection_sort import SelectionSort
 import timeit
 
 from matplotlib import pyplot as plt
-import numpy as np
 
 def draw_a_plot(x, y, sort_type):
     plt.plot(x, y)
     plt.suptitle(sort_type+" - time complexity")
     plt.ylabel("Measured time (s)")
     plt.xlabel("Number of sorted words")
-    plt.show()
+    plt.savefig(sort_type+'.png')
 
 file_path = 'pan-tadeusz-nowy.txt'
 words_number=[1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]
 measured_time=[]
-
-#jak coś to trzeba zamknąć jeden wykres, aby odpalil się kolejny
 
 # bubble sort
 for number in words_number:
