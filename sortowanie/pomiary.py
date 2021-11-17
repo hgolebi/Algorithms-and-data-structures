@@ -16,7 +16,9 @@ def draw_a_plot(x, y, sort_type):
     plt.clf()
 
 file_path = 'pan-tadeusz-nowy.txt'
-words_number=[1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]
+words_number=[]
+for i in range(1000, 10001, 1000):
+    words_number.append(i)
 time_bubble=[]
 time_selection=[]
 time_merge=[]
@@ -58,6 +60,16 @@ for number in words_number:
 
 draw_a_plot(words_number, time_quick, "Quick sort")
 
+# merge i sort na jednym wykresie
+plt.plot(words_number, time_merge, marker='o', label='Merge sort')
+plt.plot(words_number, time_quick, marker='o', label='Quick sort')
+plt.legend(prop={'size':8})
+plt.suptitle("Merge & Quick sort - time complexity")
+plt.ylabel("Measured time (s)")
+plt.xlabel("Number of sorted words")
+plt.savefig('Merge&Quick.png')
+plt.clf()
+
 # wszystkie na jednym wykresie
 plt.plot(words_number, time_bubble, marker='o', label='Bubble sort')
 plt.plot(words_number, time_selection, marker='o', label='Selection sort')
@@ -67,5 +79,14 @@ plt.legend(prop={'size':8})
 plt.suptitle("All sorting types - time complexity")
 plt.ylabel("Measured time (s)")
 plt.xlabel("Number of sorted words")
-plt.savefig('All-in-one.png')
+plt.savefig('All-in-one-v1.png')
+plt.ylim(0, 0.5)
+plt.savefig('All-in-one-v2.png')
 plt.clf()
+
+
+with open("czasy.txt", "w") as pom_czasowe:
+    pom_czasowe.write("\nbubble: "+str(time_bubble))
+    pom_czasowe.write("\nselection: "+str(time_selection))
+    pom_czasowe.write("\nmerge: "+str(time_merge))
+    pom_czasowe.write("\nquick: "+str(time_quick))
