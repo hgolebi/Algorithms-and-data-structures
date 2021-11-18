@@ -15,4 +15,5 @@ def QuickSort(list):
     sorted_list.append(mid)
     for item in sorted_right:
         sorted_list.append(item)
+
     return sorted_list

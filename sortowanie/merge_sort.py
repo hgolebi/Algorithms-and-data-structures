@@ -3,13 +3,16 @@ def merge_sort(arr):
         mid = len(arr)//2
         L = arr[:mid]
         R = arr[mid:]
-  
+
+        # sorting left half of the array
         merge_sort(L)
 
+        # sorting right half of the array
         merge_sort(R)
   
         i = j = k = 0
 
+        # merging in ascending order
         while i < len(L) and j < len(R):
             if L[i] < R[j]:
                 arr[k] = L[i]
@@ -19,6 +22,7 @@ def merge_sort(arr):
                 j += 1
             k += 1
 
+        # adding remained elements of left or right array
         while i < len(L):
             arr[k] = L[i]
             i += 1

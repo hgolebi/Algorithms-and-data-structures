@@ -5,3 +5,5 @@ def SelectionSort(list):
             if list[index] < list[min_index]:
                 min_index = index
         list[it], list[min_index] = list[min_index], list[it]
+
+    return list
