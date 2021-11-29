@@ -7,6 +7,7 @@ class Node:
         self.parent=None
 
 class BST:
+
     def __init__(self):
         self.root=None
     
@@ -64,3 +65,35 @@ class BST:
             print(cur_node.value)
     
         self._print_tree(cur_node.right_child, k1, k2)
+
+
+    def _print2D(self, root, space):
+        
+        COUNT = [10]
+
+        # Base case
+        if (root == None) :
+            return
+    
+        # Increase distance between levels
+        space += COUNT[0]
+    
+        # Process right child first
+        self._print2D(root.right_child, space)
+    
+        # Print current node after space
+        # count
+        print()
+        for i in range(COUNT[0], space):
+            print(end = " ")
+        print(root.value)
+    
+        # Process left child
+        self._print2D(root.left_child, space)
+    
+    # Wrapper over _print2D()
+    def print2D(self) :
+        
+        # space=[0]
+        # Pass initial space count as 0
+        self._print2D(self.root, 0)
