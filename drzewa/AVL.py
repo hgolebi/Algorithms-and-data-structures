@@ -33,6 +33,7 @@ class AVL:
     def __init__(self):
         self._root = None
 
+
     def find(self, value):
         '''
         Metoda wyszukuje i zwraca obiekt Node ktory zawiera poszukiwana wartosc.
@@ -71,26 +72,92 @@ class AVL:
         if value > new_parent.value:
             new_parent.right = AVL.Node(value)
             new_parent.right.parent = new_parent
-        pass
+        self._checkBalance(new_parent)
 
 
     def _checkBalance(self, node):
         balance = node.getBalance()
         if balance == 0:
             return
-        if abs(balance) == 1:
+        elif abs(balance) == 1:
             node.updateHeight()
             if node.parent == None:
                 return
             else:
                 self._checkBalance(node.parent)
-        if balance == -2:
-            self._balance(-2)
-            return
-        if balance == 2:
-            self._balance(2)
-            return
-        raise ValueError()
+        elif balance == -2:
+            self._balance(node, -2)
+            if node.parent == None:
+                return
+            else:
+                self._checkBalance(node.parent)
+        elif balance == 2:
+            self._balance(node, 2)
+            if node.parent == None:
+                return
+            else:
+                self._checkBalance(node.parent)
+        else:
+            raise ValueError()
 
-    def _balance(self, balance):
-        pass
+
+    def _balance(self, node, balance):
+        if balance == -2:
+            if node.left.getBalance() == -1:
+                self._rotateRight(node)
+            elif node.left.getBalance() == 1:
+                self._rotateLeft(node.left)
+                self._rotateRight(node)
+            else:
+                raise ValueError()
+        if balance == 2:
+            if node.right.getBalance() == 1:
+                self._rotateLeft(node)
+            elif node.right.getBalance() == -1:
+                self._rotateRight(node.right)
+                self._rotateLeft(node)
+            else:
+                raise ValueError()
+
+
+    def _rotateLeft(self, node):
+        parent = node.parent
+        r = node.right
+        rl = node.right.left
+        r.left = node
+        node.right = rl
+        if rl != None:
+            rl.parent = node
+        node.parent = r
+        r.parent = parent
+        if parent != None:
+            if parent.value > r.value:
+                parent.left = r
+            else:
+                parent.right = r
+        else:
+            self._root = r
+        node.updateHeight()
+        r.updateHeight()
+
+
+    def _rotateRight(self, node):
+        parent = node.parent
+        l = node.left
+        lr = node.left.right
+        l.right = node
+        node.left = lr
+        if lr != None:
+            lr.parent = node
+        node.parent = l
+        l.parent = parent
+        if parent != None:
+            if parent.value > l.value:
+                parent.left = l
+            else:
+                parent.right = l
+        else:
+            self._root = l
+        node.updateHeight()
+        l.updateHeight()
+
