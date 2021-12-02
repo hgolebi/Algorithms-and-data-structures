@@ -55,8 +55,9 @@ class BST:
     # displaying a tree
     def print_tree(self):
         # initial space count = 0
+        print("--------------------------------")
         self._print_tree(self.root, 0)
-
+        print("--------------------------------")
     def _print_tree(self, root, space):
         
         count = 10
