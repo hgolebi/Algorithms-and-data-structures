@@ -1,18 +1,21 @@
 import random
 from BST import BST, Node
 from AVL import AVL
-from random import randrange, shuffle
-import time
-import gc
+from random import randrange, shuffle, randint
+from time_measure import getTime
+import sys
+
+sys.setrecursionlimit(3000)
+
 
 list = []
-for i in range(0, 10001):
-    val = randrange(50000)
+for i in range(0, 50001):
+    val = randint(0, 1000000)
     while val in list:
-        val = randrange(50000)
+        val = randint(0, 1000000)
     list.append(val)
 
-checkpoints = [1000*(i+1) for i in range(0, 10)]
+checkpoints = [5000*(i+1) for i in range(0, 10)]
 
 bst_tree = BST()
 avl_tree = AVL()
@@ -28,65 +31,14 @@ for n in checkpoints:
     del_list = new_list.copy()
     shuffle(del_list)
 
-    # BST insert
-    gc_old = gc.isenabled()
-    gc.disable()
-    start = time.process_time()
-    for elem in new_list:
-        bst_tree.insert(elem)
-    stop = time.process_time()
-    gc.enable()
-    bst_times[0].append(stop - start)
+    bst_times[0].append(getTime(bst_tree, 'BST', new_list, 'insert'))
+    bst_times[1].append(getTime(bst_tree, 'BST', find_list, 'search'))
+    bst_times[2].append(getTime(bst_tree, 'BST', del_list, 'delete'))
 
-    # BST search
-    gc_old = gc.isenabled()
-    gc.disable()
-    start = time.process_time()
-    for elem in find_list:
-        bst_tree.search(elem)
-    stop = time.process_time()
-    bst_times[1].append(stop - start)
-
-    # BST delete
-    gc_old = gc.isenabled()
-    gc.disable()
-    start = time.process_time()
-    for elem in del_list:
-        bst_tree.delete_value(elem)
-    stop = time.process_time()
-    bst_times[2].append(stop - start)
-
-    assert(bst_tree.root == None)
-
-    # AVL insert
-    gc_old = gc.isenabled()
-    gc.disable()
-    start = time.process_time()
-    for elem in new_list:
-        avl_tree.insert(elem)
-    stop = time.process_time()
-    gc.enable()
-    avl_times[0].append(stop - start)
-
-    # AVL search
-    gc_old = gc.isenabled()
-    gc.disable()
-    start = time.process_time()
-    for elem in find_list:
-        avl_tree.find(elem)
-    stop = time.process_time()
-    avl_times[1].append(stop - start)
-
-    # AVL delete
-    gc_old = gc.isenabled()
-    gc.disable()
-    start = time.process_time()
-    for elem in del_list:
-        avl_tree.delete(elem)
-    stop = time.process_time()
-    avl_times[2].append(stop - start)
-
-    assert(avl_tree._root == None)
+    avl_times[0].append(getTime(avl_tree, 'AVL', new_list, 'insert'))
+    avl_times[1].append(getTime(avl_tree, 'AVL', find_list, 'search'))
+    avl_times[2].append(getTime(avl_tree, 'AVL', del_list, 'delete'))
+    print(n, "iteration")
 
 for i in range(0, 3):
     print(bst_times[i])
