@@ -1,5 +1,4 @@
-class AVL:
-    class Node:
+class Node:
         def __init__(self, value):
             self.value = value
             self.parent = None
@@ -29,6 +28,8 @@ class AVL:
                 r_height = self.right.height
             self.height = max(l_height, r_height) + 1
 
+
+class AVL:
 
     def __init__(self):
         self._root = None
@@ -62,44 +63,44 @@ class AVL:
 
     def insert(self, value):
         if self._root == None:
-            self._root = AVL.Node(value)
+            self._root = Node(value)
             return
         new_parent = self._find(self._root, value)
         if new_parent.value == value:
             return
         elif value < new_parent.value:
-            new_parent.left = AVL.Node(value)
+            new_parent.left = Node(value)
             new_parent.left.parent = new_parent
         else:
-            new_parent.right = AVL.Node(value)
+            new_parent.right = Node(value)
             new_parent.right.parent = new_parent
         self._checkBalance(new_parent)
 
 
     def _checkBalance(self, node):
+        node.updateHeight()
         balance = node.getBalance()
         if balance == 0:
-            return
+            return node.parent
         elif abs(balance) == 1:
-            node.updateHeight()
+            # node.updateHeight()
             if node.parent == None:
-                return
+                return node.parent
             else:
                 self._checkBalance(node.parent)
-        elif balance == -2:
+        elif balance <= -2:
             self._balance(node, -2)
             if node.parent == None:
-                return
+                return node.parent
             else:
                 self._checkBalance(node.parent)
-        elif balance == 2:
+        elif balance >= 2:
             self._balance(node, 2)
             if node.parent == None:
-                return
+                return node.parent
             else:
                 self._checkBalance(node.parent)
-        else:
-            raise ValueError()
+
 
 
     def _balance(self, node, balance):
@@ -110,7 +111,7 @@ class AVL:
                 self._rotateLeft(node.left)
                 self._rotateRight(node)
             else:
-                raise ValueError()
+                self._rotateRight(node)
         if balance == 2:
             if node.right.getBalance() == 1:
                 self._rotateLeft(node)
@@ -118,7 +119,7 @@ class AVL:
                 self._rotateRight(node.right)
                 self._rotateLeft(node)
             else:
-                raise ValueError()
+                self._rotateLeft(node)
 
 
     def _rotateLeft(self, node):
@@ -169,56 +170,102 @@ class AVL:
         self._delete(element)
 
     def _delete(self, element):
+        left_child = element.left
+        right_child = element.right
+        parent = element.parent
         #przypadek 1: usuwany element jest lisciem
-        if element.left == None and element.right == None:
-            if element.parent == None:
+        if left_child == None and right_child == None:
+            if parent == None:
                 self._root = None
                 return
             else:
-                if element.parent.value > element.value:
-                    element.parent.left = None
+                if parent.value > element.value:
+                    parent.left = None
                 else:
-                    element.parent.right = None
-                element.parent.updateHeight()
-                self._checkBalance(element.parent)
+                    parent.right = None
+                parent.updateHeight()
+                next_to_check = self._checkBalance(parent)
+                while(next_to_check != None):                   # checkBalance w przypadku gdy balance = 0 nie sprawdzi kolejnego rodzica
+                    next_to_check = self._checkBalance(next_to_check)  # przy usuwaniu musimy jednak sprawdzic cala sciezke, wiec potrzebna nam ta petla
                 return
 
         #przypadek 2: usuwany element ma tylko lewego dziedzica
-        elif element.right == None and element.left != None:
-            if element.parent == None:
-                element.left.parent = None
-                self._root = element.left
+        elif right_child == None and left_child != None:
+            if parent == None:
+                left_child.parent = None
+                self._root = left_child
                 return
             else:
-                element.left.parent = element.parent
-                if element.parent.value > element.value:
-                    element.parent.left = element.left
+                left_child.parent = parent
+                if parent.value > element.value:
+                    parent.left = left_child
                 else:
-                    element.parent.right = element.left
-                element.parent.updateHeight()
-                self._checkBalance(element.parent)
+                    parent.right = left_child
+                parent.updateHeight()
+                next_to_check = self._checkBalance(parent)
+                while(next_to_check != None):
+                    next_to_check = self._checkBalance(next_to_check)
 
         #przypadek 3: usuwany element ma tylko prawego dziedzica
-        elif element.left == None and element.right != None:
-            if element.parent == None:
-                element.right.parent = None
-                self._root = element.right
+        elif left_child == None and right_child != None:
+            if parent == None:
+                right_child.parent = None
+                self._root = right_child
                 return
             else:
-                element.right.parent = element.parent
-                if element.parent.value > element.value:
-                    element.parent.left = element.rigth
+                right_child.parent = parent
+                if parent.value > element.value:
+                    parent.left = right_child
                 else:
-                    element.parent.right = element.right
-                element.parent.updateHeight()
-                self._checkBalance(element.parent)
+                    parent.right = right_child
+                parent.updateHeight()
+                next_to_check = self._checkBalance(parent)
+                while(next_to_check != None):
+                    next_to_check = self._checkBalance(next_to_check)
 
         #przypadek 4: usuwany element ma obu dziedziców
         else:
             # najpierw znajdujemy nastepnika
-            next = element.right
-            while(next.left != None):
-                next = next.left
+            next = left_child
+            while(next.right != None):
+                next = next.right
             value = next.value   # zapamietujemy jego wartosc, aby pozniej wstawic ja w miejsce usuwanego elementu
             self._delete(next)   # usuwamy nastepnika
             element.value = value   # zamieniamy wartosc elementu ktory chcielismy usunac na wartosc nastepnika
+
+
+    def _print2D(self, root, space):
+
+        COUNT = [10]
+
+        # Base case
+        if (root == None) :
+            return
+
+        # Increase distance between levels
+        space += COUNT[0]
+
+        # Process right child first
+        self._print2D(root.right, space)
+
+        # Print current node after space
+        # count
+        print()
+        for i in range(COUNT[0], space):
+            print(end = " ")
+        print(root.value)
+
+        # Process left child
+        self._print2D(root.left, space)
+
+    def print2D(self) :
+
+        # space=[0]
+        # Pass initial space count as 0
+        print("--------------------------------")
+        self._print2D(self._root, 0)
+        print("--------------------------------")
+
+
+    def getRoot(self):
+        return self._root.value
