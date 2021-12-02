@@ -166,6 +166,7 @@ class AVL:
     def delete(self, value):
         element = self.find(value)
         if element == None or element.value != value:   # nie ma takiej wartosci w drzewie
+            print("nie ma takiej wartosci w drzewie")
             return
         self._delete(element)
 
@@ -236,32 +237,32 @@ class AVL:
 
     def _print2D(self, root, space):
 
-        COUNT = [10]
+        COUNT = 10
 
         # Base case
         if (root == None) :
             return
 
         # Increase distance between levels
-        space += COUNT[0]
+        space += COUNT
 
         # Process right child first
         self._print2D(root.right, space)
 
         # Print current node after space
-        # count
-        print()
-        for i in range(COUNT[0], space):
+        # COUNT
+        # print()
+        for i in range(COUNT, space):
             print(end = " ")
         print(root.value)
 
         # Process left child
         self._print2D(root.left, space)
 
-    def print2D(self) :
+    def print(self) :
 
         # space=[0]
-        # Pass initial space count as 0
+        # Pass initial space COUNT as 0
         print("--------------------------------")
         self._print2D(self._root, 0)
         print("--------------------------------")
