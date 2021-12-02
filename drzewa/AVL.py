@@ -50,11 +50,11 @@ class AVL:
             return None
         if value == node.value:
             return node
-        if value < node.value:
+        elif value < node.value:
             if node.left == None:
                 return node
             return self._find(node.left, value)
-        if value > node.value:
+        else:
             if node.right == None:
                 return node
             return self._find(node.right, value)
@@ -63,13 +63,14 @@ class AVL:
     def insert(self, value):
         if self._root == None:
             self._root = AVL.Node(value)
+            return
         new_parent = self._find(self._root, value)
         if new_parent.value == value:
             return
-        if value < new_parent.value:
+        elif value < new_parent.value:
             new_parent.left = AVL.Node(value)
             new_parent.left.parent = new_parent
-        if value > new_parent.value:
+        else:
             new_parent.right = AVL.Node(value)
             new_parent.right.parent = new_parent
         self._checkBalance(new_parent)
@@ -161,3 +162,63 @@ class AVL:
         node.updateHeight()
         l.updateHeight()
 
+    def delete(self, value):
+        element = self.find(value)
+        if element == None or element.value != value:   # nie ma takiej wartosci w drzewie
+            return
+        self._delete(element)
+
+    def _delete(self, element):
+        #przypadek 1: usuwany element jest lisciem
+        if element.left == None and element.right == None:
+            if element.parent == None:
+                self._root = None
+                return
+            else:
+                if element.parent.value > element.value:
+                    element.parent.left = None
+                else:
+                    element.parent.right = None
+                element.parent.updateHeight()
+                self._checkBalance(element.parent)
+                return
+
+        #przypadek 2: usuwany element ma tylko lewego dziedzica
+        elif element.right == None and element.left != None:
+            if element.parent == None:
+                element.left.parent = None
+                self._root = element.left
+                return
+            else:
+                element.left.parent = element.parent
+                if element.parent.value > element.value:
+                    element.parent.left = element.left
+                else:
+                    element.parent.right = element.left
+                element.parent.updateHeight()
+                self._checkBalance(element.parent)
+
+        #przypadek 3: usuwany element ma tylko prawego dziedzica
+        elif element.left == None and element.right != None:
+            if element.parent == None:
+                element.right.parent = None
+                self._root = element.right
+                return
+            else:
+                element.right.parent = element.parent
+                if element.parent.value > element.value:
+                    element.parent.left = element.rigth
+                else:
+                    element.parent.right = element.right
+                element.parent.updateHeight()
+                self._checkBalance(element.parent)
+
+        #przypadek 4: usuwany element ma obu dziedziców
+        else:
+            # najpierw znajdujemy nastepnika
+            next = element.right
+            while(next.left != None):
+                next = next.left
+            value = next.value   # zapamietujemy jego wartosc, aby pozniej wstawic ja w miejsce usuwanego elementu
+            self._delete(next)   # usuwamy nastepnika
+            element.value = value   # zamieniamy wartosc elementu ktory chcielismy usunac na wartosc nastepnika
