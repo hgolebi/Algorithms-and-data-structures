@@ -32,9 +32,10 @@ class BST:
             else:
                 self._insert(value, cur_node.right_child)
         else:
-            print(value + " is already in tree")
+            return None
+            #print(str(value) + " is already in tree")
 
-    # searching an element
+    # searching for an element
     # method returns an instance of Node with given value
     def search(self, value):
         if self.root != None:
@@ -51,52 +52,33 @@ class BST:
             return self._search(value, cur_node.right_child)
         return None
 
-    def print_tree(self, k1, k2):
-        if self.root != None:
-            self._print_tree(self.root, k1, k2)
-        return
-    
-    def _print_tree(self, cur_node, k1, k2):
-        if cur_node == None:
-            return
-        if k1 < cur_node.value:
-            self._print_tree(cur_node.left_child, k1, k2)
-    
-        if k1 <= cur_node.value and k2 >= cur_node.value:
-            print(cur_node.value)
-    
-        self._print_tree(cur_node.right_child, k1, k2)
-
     # displaying a tree
-    def _print2D(self, root, space):
-        
-        COUNT = [10]
+    def print_tree(self):
+        # initial space count = 0
+        self._print_tree(self.root, 0)
 
-        # Base case
-        if (root == None) :
+    def _print_tree(self, root, space):
+        
+        count = 10
+
+        # base case
+        if (root == None):
             return
     
-        # Increase distance between levels
-        space += COUNT[0]
+        # increase distance between levels
+        space += count
     
-        # Process right child first
-        self._print2D(root.right_child, space)
+        # process right child first
+        self._print_tree(root.right_child, space)
     
-        # Print current node after space
-        # count
-        print()
-        for i in range(COUNT[0], space):
+        # print current node after space
+        print("\t")
+        for i in range(count, space):
             print(end = " ")
         print(root.value)
     
-        # Process left child
-        self._print2D(root.left_child, space)
-    
-    def print2D(self) :
-        
-        # space=[0]
-        # Pass initial space count as 0
-        self._print2D(self.root, 0)
+        # process left child
+        self._print_tree(root.left_child, space)
 
     def delete_value(self, value):
         return self.delete_node(self.search(value))
