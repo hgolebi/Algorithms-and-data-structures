@@ -166,6 +166,7 @@ class AVL:
     def delete(self, value):
         element = self.find(value)
         if element == None or element.value != value:   # nie ma takiej wartosci w drzewie
+            print("nie ma takiej wartosci w drzewie")
             return
         self._delete(element)
 
@@ -237,31 +238,31 @@ class AVL:
     def print_tree(self):
         # initial space count = 0
         print("--------------------------------")
-        self._print_tree(self.root, 0)
+        self._print_tree(self._root, 0)
         print("--------------------------------")
 
     def _print_tree(self, root, space):
-        
+
         count = 10
 
         # base case
         if (root == None):
             return
-    
+
         # increase distance between levels
         space += count
-    
+
         # process right child first
-        self._print_tree(root.right_child, space)
-    
+        self._print_tree(root.right, space)
+
         # print current node after space
         print("\t")
         for i in range(count, space):
             print(end = " ")
         print(root.value)
-    
+
         # process left child
-        self._print_tree(root.left_child, space)
+        self._print_tree(root.left, space)
 
 
     def getRoot(self):
