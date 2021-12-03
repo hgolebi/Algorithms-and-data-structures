@@ -238,7 +238,7 @@ class AVL:
     def print_tree(self):
         # initial space count = 0
         print("--------------------------------")
-        self._print_tree(self.root, 0)
+        self._print_tree(self._root, 0)
         print("--------------------------------")
 
     def _print_tree(self, root, space):
@@ -253,7 +253,7 @@ class AVL:
         space += count
 
         # process right child first
-        self._print_tree(root.right_child, space)
+        self._print_tree(root.right, space)
 
         # print current node after space
         print("\t")
@@ -262,7 +262,7 @@ class AVL:
         print(root.value)
 
         # process left child
-        self._print_tree(root.left_child, space)
+        self._print_tree(root.left, space)
 
 
     def getRoot(self):
