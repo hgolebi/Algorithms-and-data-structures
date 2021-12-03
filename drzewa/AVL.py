@@ -235,37 +235,34 @@ class AVL:
             element.value = value   # zamieniamy wartosc elementu ktory chcielismy usunac na wartosc nastepnika
 
 
-    def _print2D(self, root, space):
+    def print_tree(self):
+        # initial space count = 0
+        print("--------------------------------")
+        self._print_tree(self.root, 0)
+        print("--------------------------------")
 
-        COUNT = 10
+    def _print_tree(self, root, space):
 
-        # Base case
-        if (root == None) :
+        count = 10
+
+        # base case
+        if (root == None):
             return
 
-        # Increase distance between levels
-        space += COUNT
+        # increase distance between levels
+        space += count
 
-        # Process right child first
-        self._print2D(root.right, space)
+        # process right child first
+        self._print_tree(root.right_child, space)
 
-        # Print current node after space
-        # COUNT
-        # print()
-        for i in range(COUNT, space):
+        # print current node after space
+        print("\t")
+        for i in range(count, space):
             print(end = " ")
         print(root.value)
 
-        # Process left child
-        self._print2D(root.left, space)
-
-    def print(self) :
-
-        # space=[0]
-        # Pass initial space COUNT as 0
-        print("--------------------------------")
-        self._print2D(self._root, 0)
-        print("--------------------------------")
+        # process left child
+        self._print_tree(root.left_child, space)
 
 
     def getRoot(self):

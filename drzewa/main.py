@@ -3,6 +3,7 @@ from BST import BST, Node
 from AVL import AVL
 from random import randrange, shuffle, randint
 from time_measure import getTime
+from plots import draw_a_plot
 import sys
 
 sys.setrecursionlimit(3000)
@@ -40,8 +41,6 @@ for n in checkpoints:
     avl_times[2].append(getTime(avl_tree, 'AVL', del_list, 'delete'))
     print(n, "iteration")
 
-for i in range(0, 3):
-    print(bst_times[i])
-
-for i in range(0, 3):
-    print(avl_times[i])
+draw_a_plot(checkpoints, bst_times[0], avl_times[0], "inserting")
+draw_a_plot(checkpoints, bst_times[1], avl_times[1], "searching")
+draw_a_plot(checkpoints, bst_times[2], avl_times[2], "deleting")
