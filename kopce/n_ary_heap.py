@@ -46,3 +46,30 @@ class NHeap:
             low = self._lowestChild(pos)
             self._heap[low], self._heap[pos] = self._heap[pos], self._heap[low]
             pos = low
+
+    def print(self):
+        if self._n == 3:
+            line_length = 108
+        else:
+            line_length = 128
+        curr_line = 1
+        counter = 0
+        line = ''
+        for elem in self._heap:
+            if counter == curr_line:
+                print('\n' + line, '\n')
+                line = ''
+                curr_line *= self._n
+                counter = 0
+            counter += 1
+            space = line_length // (curr_line * 2) - 1
+            if curr_line > 1 and counter % self._n == 1 :
+                line += '|' + ' ' * (space - 1) + str(elem).zfill(2) + ' ' * space
+            elif counter % self._n == 0:
+                line += ' ' * space + str(elem).zfill(2) + ' ' * (space - 1) + '|'
+            else:
+                line += ' ' * space + str(elem).zfill(2) + ' ' * space
+        print(line)
+
+heap = NHeap(3)
+heap.print()
