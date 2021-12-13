@@ -4,8 +4,6 @@ class NHeap:
         self._n = n
 
     def _parent(self, pos):
-        if pos == 0:
-            return None
         return (pos-1)//self._n
 
     def _lowestChild(self, pos):
@@ -26,8 +24,11 @@ class NHeap:
             print('heap is empty!')
             return None
         pop_value = self._heap[0]
-        self._heap[0] = self._heap.pop()
-        self._downHeap(0)
+        if len(self._heap) > 1:
+            self._heap[0] = self._heap.pop()
+            self._downHeap(0)
+        else:
+            self._heap.pop()
         return pop_value
 
     def insert(self, value):
@@ -36,7 +37,7 @@ class NHeap:
 
     def _upHeap(self, pos):
         temp = self._heap[pos]
-        while self._parent(pos) > 0 and self._heap[self._parent(pos)] > temp:
+        while self._parent(pos) >= 0 and self._heap[self._parent(pos)] > temp:
             self._heap[pos] = self._heap[self._parent(pos)]
             pos = self._parent(pos)
         self._heap[pos] = temp
@@ -48,10 +49,14 @@ class NHeap:
             pos = low
 
     def print(self):
+        if not self._heap:
+            print("Heap is empty!")
+            return
         if self._n == 3:
             line_length = 108
         else:
             line_length = 128
+        print('-' * line_length)
         curr_line = 1
         counter = 0
         line = ''
@@ -62,14 +67,15 @@ class NHeap:
                 curr_line *= self._n
                 counter = 0
             counter += 1
-            space = line_length // (curr_line * 2) - 1
+            space = max(1, line_length // (curr_line * 2) - 1)
             if curr_line > 1 and counter % self._n == 1 :
                 line += '|' + ' ' * (space - 1) + str(elem).zfill(2) + ' ' * space
             elif counter % self._n == 0:
                 line += ' ' * space + str(elem).zfill(2) + ' ' * (space - 1) + '|'
             else:
                 line += ' ' * space + str(elem).zfill(2) + ' ' * space
-        print(line)
+        print(line, '\n')
+        print('-' * line_length)
 
 heap = NHeap(3)
 heap.print()
