@@ -18,6 +18,8 @@ class NHeap:
                 min = child1 + i
         return min
 
+    def clean(self):
+        self._heap = []
 
     def delete_root(self):
         if len(self._heap) == 0:
@@ -43,10 +45,13 @@ class NHeap:
         self._heap[pos] = temp
 
     def _downHeap(self, pos):
-        while self._lowestChild(pos) != None and self._heap[self._lowestChild(pos)] < self._heap[pos]:
-            low = self._lowestChild(pos)
+        low = self._lowestChild(pos)
+        while low != None:
+            if self._heap[low] >= self._heap[pos]:
+                return
             self._heap[low], self._heap[pos] = self._heap[pos], self._heap[low]
             pos = low
+            low = self._lowestChild(pos)
 
     def print(self):
         if not self._heap:
@@ -76,3 +81,8 @@ class NHeap:
                 line += ' ' * space + str(elem).zfill(2) + ' ' * space
         print(line, '\n')
         print('-' * line_length)
+
+    def copy(self):
+        new_heap = NHeap(self._n)
+        new_heap._heap = self._heap.copy()
+        return new_heap
