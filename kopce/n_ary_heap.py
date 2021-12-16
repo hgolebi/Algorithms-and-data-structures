@@ -82,5 +82,10 @@ class NHeap:
         print(line, '\n')
         print('-' * line_length)
 
+    def copy(self):
+        new_heap = NHeap(self._n)
+        new_heap._heap = self._heap
+        return new_heap
+
 heap = NHeap(3)
 heap.print()
