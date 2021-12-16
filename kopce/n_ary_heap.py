@@ -43,10 +43,13 @@ class NHeap:
         self._heap[pos] = temp
 
     def _downHeap(self, pos):
-        while self._lowestChild(pos) != None and self._heap[self._lowestChild(pos)] < self._heap[pos]:
-            low = self._lowestChild(pos)
+        low = self._lowestChild(pos)
+        while low != None:
+            if self._heap[low] >= self._heap[pos]:
+                return
             self._heap[low], self._heap[pos] = self._heap[pos], self._heap[low]
             pos = low
+            low = self._lowestChild(pos)
 
     def print(self):
         if not self._heap:
