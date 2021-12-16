@@ -86,6 +86,3 @@ class NHeap:
         new_heap = NHeap(self._n)
         new_heap._heap = self._heap
         return new_heap
-
-heap = NHeap(3)
-heap.print()

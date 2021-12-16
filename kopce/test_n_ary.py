@@ -3,14 +3,14 @@ from random import shuffle
 
 list = list(range(0,25))
 shuffle(list)
-heap = NHeap(4)
+heap = NHeap(2)
 
 for elem in list:
-    heap.insert(elem)
+    heap.insert_value(elem)
     print('inserting: ', elem)
     heap.print()
 
 for elem in list:
-    pop = heap.pop()
+    pop = heap.delete_root()
     heap.print()
     print('popped element: ', pop)

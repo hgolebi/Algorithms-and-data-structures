@@ -15,6 +15,14 @@ class BinaryHeap:
         return self.get_left(i) < len(self.heap)
     def has_right(self, i):
         return self.get_right(i) < len(self.heap)
+
+    def clean(self):
+        self.heap = []
+    
+    def copy(self):
+        new_heap = BinaryHeap()
+        new_heap.heap = self.heap
+        return new_heap
     
     #inserting
     def insert_value(self, value):
@@ -48,5 +56,28 @@ class BinaryHeap:
             i = j
 
     #printing
-    def print_heap(self):
-        print(self.heap)
+    def print(self):
+        if not self.heap:
+            print("Heap is empty!")
+            return
+        line_length = 128
+        print('-' * line_length)
+        curr_line = 1
+        counter = 0
+        line = ''
+        for elem in self.heap:
+            if counter == curr_line:
+                print('\n' + line, '\n')
+                line = ''
+                curr_line *= 2
+                counter = 0
+            counter += 1
+            space = max(1, line_length // (curr_line * 2) - 1)
+            if curr_line > 1 and counter % 2 == 1 :
+                line += '|' + ' ' * (space - 1) + str(elem).zfill(2) + ' ' * space
+            elif counter % 2 == 0:
+                line += ' ' * space + str(elem).zfill(2) + ' ' * (space - 1) + '|'
+            else:
+                line += ' ' * space + str(elem).zfill(2) + ' ' * space
+        print(line, '\n')
+        print('-' * line_length)
