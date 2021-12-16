@@ -19,7 +19,7 @@ class NHeap:
         return min
 
 
-    def pop(self):
+    def delete_root(self):
         if len(self._heap) == 0:
             print('heap is empty!')
             return None
@@ -31,7 +31,7 @@ class NHeap:
             self._heap.pop()
         return pop_value
 
-    def insert(self, value):
+    def insert_value(self, value):
         self._heap.append(value)
         self._upHeap(len(self._heap) - 1)
 
