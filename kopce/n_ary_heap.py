@@ -18,6 +18,8 @@ class NHeap:
                 min = child1 + i
         return min
 
+    def clean(self):
+        self._heap = []
 
     def delete_root(self):
         if len(self._heap) == 0:
