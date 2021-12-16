@@ -21,7 +21,7 @@ class BinaryHeap:
     
     def copy(self):
         new_heap = BinaryHeap()
-        new_heap.heap = self.heap
+        new_heap.heap = self.heap.copy()
         return new_heap
     
     #inserting

@@ -84,5 +84,5 @@ class NHeap:
 
     def copy(self):
         new_heap = NHeap(self._n)
-        new_heap._heap = self._heap
+        new_heap._heap = self._heap.copy()
         return new_heap
