@@ -31,5 +31,5 @@ def test_random_pattern_and_text_searching():
         pat = "".join(choice(alphabet) for i in range(pat_len))
 
         naive = algorytm_naiwny.find(pat, txt)
-        kp = algorytm_KR.find(pat, txt, 2, 97)
-        assert kp == naive
+        kr = algorytm_KR.find(pat, txt, 2, 97)
+        assert kr == naive
