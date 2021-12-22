@@ -1,0 +1,2 @@
+# przypadki brzegowe
+find("", "")
