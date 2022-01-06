@@ -29,18 +29,18 @@ for n in checkpoints:
 
     new_list = list[:n]
 
-    heap_binary_times[0].append(get_time_insert(heap_binary, new_list, 1))
-    heap_binary_times[1].append(get_time_delete(heap_binary, n, 8))
+    heap_binary_times[0].append(get_time_insert(heap_binary, new_list, 10))
+    heap_binary_times[1].append(get_time_delete(heap_binary, n, 10))
 
-    heap_2_times[0].append(get_time_insert(heap_2, new_list, 1))
-    heap_2_times[1].append(get_time_delete(heap_2, n, 8))
+    heap_2_times[0].append(get_time_insert(heap_2, new_list, 10))
+    heap_2_times[1].append(get_time_delete(heap_2, n, 10))
 
-    heap_3_times[0].append(get_time_insert(heap_3, new_list, 1))
-    heap_3_times[1].append(get_time_delete(heap_3, n, 8))
+    heap_3_times[0].append(get_time_insert(heap_3, new_list, 10))
+    heap_3_times[1].append(get_time_delete(heap_3, n, 10))
 
-    heap_4_times[0].append(get_time_insert(heap_4, new_list, 1))
-    heap_4_times[1].append(get_time_delete(heap_4, n, 8))
+    heap_4_times[0].append(get_time_insert(heap_4, new_list, 10))
+    heap_4_times[1].append(get_time_delete(heap_4, n, 10))
     print(n, "iteration")
 
-# draw_a_plot(checkpoints, heap_2_times[0], heap_3_times[0], heap_4_times[0], heap_binary_times[0], "creating")
+draw_a_plot(checkpoints, heap_2_times[0], heap_3_times[0], heap_4_times[0], heap_binary_times[0], "creating")
 draw_a_plot(checkpoints, heap_2_times[1], heap_3_times[1], heap_4_times[1], heap_binary_times[1], "deleting root")
