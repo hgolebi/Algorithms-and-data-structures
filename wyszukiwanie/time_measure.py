@@ -4,7 +4,7 @@ import algorytm_naiwny
 import algorytm_KMP
 import algorytm_KR
 
-def get_time_(txt, pattern_list, algorithm, rep):
+def get_time(txt, pattern_list, algorithm, rep):
     '''
 
     argument algorithm wyznacza, ktorego algorytmu uzyc do pomiaru:
@@ -28,7 +28,7 @@ def get_time_(txt, pattern_list, algorithm, rep):
             times += stop - start
 
     # algorytm KMP
-    if algorithm == 'KMP':
+    elif algorithm == 'KMP':
         for i in range(rep):
             gc_old = gc.isenabled()
             gc.disable()
@@ -40,7 +40,7 @@ def get_time_(txt, pattern_list, algorithm, rep):
             times += stop - start
 
     # algorytm KR
-    if algorithm == 'KR':
+    elif algorithm == 'KR':
         for i in range(rep):
             gc_old = gc.isenabled()
             gc.disable()

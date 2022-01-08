@@ -1,6 +1,6 @@
 import string
 
-def convert_polish_signs(file_address):
+def convert_polish_signs_del_punc(file_address):
 
     polish_signs = {"ą": "a", "Ą": "A", "ć": "c", "Ć": "C",
                     "ę": "e", "Ę": "E", "ł": "l", "Ł": "L",
@@ -13,6 +13,14 @@ def convert_polish_signs(file_address):
     for char in text:
         if char in polish_signs:
             text = text.replace(char, polish_signs[char])
+    
+    not_allowed_chars = string.punctuation
+    letters = list(text)
+    for i in range(len(letters)):
+        if letters[i] in not_allowed_chars:
+            letters[i]=""
+    text = "".join(letters)
+
     file.close()
 
     with open(file_address, "w", encoding='UTF-8') as file:
@@ -21,18 +29,10 @@ def convert_polish_signs(file_address):
 
 def get_string(file_address, number_of_words=None):
 
-    not_allowed_chars = string.punctuation
     file = open(file_address, 'r')
     text = file.read()
-    letters = list(text)
-    for i in range(len(letters)):
-        if letters[i] in not_allowed_chars:
-            letters[i]=""
-    text = "".join(letters)
     if number_of_words:
         text = text[:number_of_words]
     file.close()
 
     return text
-
-print(get_string("txt.txt"))
