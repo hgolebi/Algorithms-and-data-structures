@@ -6,7 +6,7 @@ from random import choice
 def test_standard():
     results = KMP_find('abc', '***abc****')
     assert len(results) == 1
-    assert results[0] == 4
+    assert results[0] == 3
 
 def test_few_occurances():
     results = KMP_find('abc', '*abc**abc***abc***')
@@ -25,10 +25,10 @@ def test_both_empty():
     assert KMP_find('', '') == "Empty pattern or text"
 
 def test_no_occurances():
-    assert len(KMP_find('abc', 'qwerty')) == "Pattern not in the text"
+    assert KMP_find('abc', 'qwerty') == "Pattern not in the text"
 
 def test_pattern_longer_than_txt():
-    assert len(KMP_find('abcd', 'abc')) == "Pattern longer than text"
+    assert KMP_find('abcd', 'abc') == "Pattern longer than text"
 
 def test_pattern_the_same_as_txt():
     results = KMP_find('abc', 'abc')
