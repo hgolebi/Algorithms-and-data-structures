@@ -16,8 +16,11 @@ def find(pat, txt, d=256, q=997):
     #j = 0
     p = 0    # hash value for pattern
     t = 0    # hash value for txt
-    h = (pow(d, M-1))%q
+    h = 1
     occurrences_list = []
+
+    for i in range(M-1):
+        h = (h*d) % q
   
     # hash value of pattern and first window of text
     for i in range(M):
@@ -30,8 +33,7 @@ def find(pat, txt, d=256, q=997):
             for j in range(M):
                 if txt[i+j] != pat[j]:
                     break
-                else: j+=1
-  
+            j+=1
             if j==M:
                 occurrences_list.append(i)
   
