@@ -9,7 +9,7 @@ whole_txt = get_string("pan-tadeusz.txt")
 naive_times = []
 KR_times = []
 KMP_times = []
-checkpoints = [i for i in range(100, 1001, 100)]
+checkpoints = [i for i in range(1, 11, 1)]
 
 for i in checkpoints:
 
@@ -22,4 +22,9 @@ for i in checkpoints:
 
 
 draw_a_plot(checkpoints, naive_times, KMP_times, KR_times)
+
+# timen = get_time(whole_txt, ["Z radoscia zwaza dziecka zywosc i urode"], "N", 1)
+# timekmp = get_time(whole_txt, ["Z radoscia zwaza dziecka zywosc i urode"], "KMP", 1)
+# timekr = get_time(whole_txt, ["Z radoscia zwaza dziecka zywosc i urode"], "KR", 1)
+# print("KR: "+str(timekr)+" KMP: "+str(timekmp)+" nainwy: "+str(timen))
 

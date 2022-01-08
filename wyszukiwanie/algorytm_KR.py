@@ -46,4 +46,5 @@ def find(pat, txt, d=256, q=997):
 
     if occurrences_list:
         return occurrences_list
+    print("Pattern not in the text")
     return "Pattern not in the text"
