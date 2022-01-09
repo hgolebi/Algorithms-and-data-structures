@@ -5,15 +5,11 @@ from random import choice
 
 def test_standard():
     results = KMP_find('abc', '***abc****')
-    assert len(results) == 1
-    assert results[0] == 3
+    assert results == [3]
 
 def test_few_occurances():
     results = KMP_find('abc', '*abc**abc***abc***')
-    assert len(results) == 3
-    assert results[0] == 1
-    assert results[1] == 6
-    assert results[2] == 12
+    assert results == [1, 6, 12]
 
 def test_empty_text():
     assert KMP_find('abc', '') == "Empty pattern or text"
