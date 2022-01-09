@@ -12,8 +12,6 @@ def find(pat, txt, d=256, q=997):
 
     M = len(pat)
     N = len(txt)
-    #i = 0
-    #j = 0
     p = 0    # hash value for pattern
     t = 0    # hash value for txt
     h = 1
@@ -48,5 +46,4 @@ def find(pat, txt, d=256, q=997):
 
     if occurrences_list:
         return occurrences_list
-    print("Pattern not in the text")
     return "Pattern not in the text"

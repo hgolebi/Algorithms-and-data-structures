@@ -22,12 +22,3 @@ for i in checkpoints:
 
 
 draw_a_plot(checkpoints, naive_times, KMP_times, KR_times)
-
-# timen = get_time(whole_txt, ["Z radoscia zwaza dziecka zywosc i urode"], "N", 1)
-# timekmp = get_time(whole_txt, ["Z radoscia zwaza dziecka zywosc i urode"], "KMP", 1)
-# timekr = get_time(whole_txt, ["Z radoscia zwaza dziecka zywosc i urode"], "KR", 1)
-# print(KR.find("Z radoscia zwaza dziecka zywosc i urode", whole_txt, 256))
-# print(KMP.KMP_find("Z radoscia zwaza dziecka zywosc i urode", whole_txt))
-# print(N.find("Z radoscia zwaza dziecka zywosc i urode", whole_txt))
-# print("KR: "+str(timekr)+" KMP: "+str(timekmp)+" nainwy: "+str(timen))
-
